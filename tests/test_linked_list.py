@@ -85,6 +85,26 @@ def test_getitem(populated_list):
     assert populated_list[2] == 30
 
 
+def test_set(populated_list):
+    populated_list.set(0, 1)
+    populated_list.set(1, 2)
+    populated_list.set(2, 3)
+
+    assert populated_list.head.value == 1
+    assert populated_list.get(1) == 2
+    assert populated_list.tail.value == 3
+
+
+def test_setitem(populated_list):
+    populated_list[0] = 1
+    populated_list[1] = 2
+    populated_list[2] = 3
+
+    assert populated_list.head.value == 1
+    assert populated_list.get(1) == 2
+    assert populated_list.tail.value == 3
+
+
 def test_getitem_out_of_bounds(populated_list):
     # pytest.raises checks that the correct error is thrown
     with pytest.raises(IndexError, match="Index out of range"):

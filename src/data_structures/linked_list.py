@@ -54,6 +54,11 @@ class LinkedList:
             raise IndexError("Index out of range")
         return self.get(index)
 
+    def __setitem__(self, index, value):
+        if index < 0 or index >= self.length:
+            raise IndexError("Index out of range")
+        self.set(index, value)
+
     def prepend(self, value):
         new_head = Node(value)
         new_head.next = self.head
@@ -120,6 +125,22 @@ class LinkedList:
                 curr = curr.next
 
         return curr.value if curr else None
+
+    def set(self, index, value):
+        if index < 0 or index >= self.length:
+            return
+
+        if index == self.length - 1 and self.tail:
+            self.tail.value = value
+
+        curr = self.head
+
+        for _ in range(index):
+            if curr:
+                curr = curr.next
+
+        if curr:
+            curr.value = value
 
     def contains(self, value):
         curr = self.head
