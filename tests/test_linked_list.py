@@ -119,8 +119,41 @@ def test_insert(populated_list, empty_list):
     assert populated_list.length == 5
 
 
+def test_insert_out_of_bounds(populated_list):
+    with pytest.raises(IndexError, match="Index out of range"):
+        populated_list.insert(5, "too far")
+
+    with pytest.raises(IndexError, match="Index out of range"):
+        populated_list.insert(-1, "negative")
+
+
+def test_insert_at_head(empty_list, populated_list):
+    empty_list.insert(0, 100)
+    assert empty_list.head.value == 100
+    assert empty_list.tail.value == 100
+    assert len(empty_list) == 1
+
+    populated_list.insert(0, 99)
+    assert populated_list.head.value == 99
+    assert populated_list.get(1) == 10
+    assert len(populated_list) == 4
+
+
+def test_insert_at_tail(populated_list):
+    populated_list.insert(3, 99)
+    assert populated_list.tail.value == 99
+    assert populated_list.get(2) == 30
+    assert len(populated_list) == 4
+
+
+def test_insert_in_middle(populated_list):
+    populated_list.insert(1, 15)
+    assert populated_list.get(1) == 15
+    assert populated_list.get(2) == 20
+    assert len(populated_list) == 4
+
+
 def test_getitem_out_of_bounds(populated_list):
-    # pytest.raises checks that the correct error is thrown
     with pytest.raises(IndexError, match="Index out of range"):
         _ = populated_list[5]
 
@@ -131,7 +164,7 @@ def test_getitem_out_of_bounds(populated_list):
 def test_contains(populated_list):
     assert populated_list.contains(20) is True
     assert populated_list.contains(99) is False
-    # Testing the __contains__ dunder method
+
     assert 10 in populated_list
     assert 50 not in populated_list
 
@@ -152,3 +185,12 @@ def test_clear(populated_list):
 def test_to_list(populated_list, empty_list):
     assert populated_list.to_list() == [10, 20, 30]
     assert empty_list.to_list() == []
+
+
+def test_reverse(empty_list, populated_list):
+    assert empty_list.to_list() == empty_list.reverse().to_list()
+    assert populated_list.reverse().to_list() == [30, 20, 10]
+
+    empty_list.append(1)
+
+    assert empty_list.reverse().to_list() == [1]

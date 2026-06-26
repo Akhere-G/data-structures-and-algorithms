@@ -144,7 +144,7 @@ class LinkedList:
 
     def insert(self, index, value):
         if index < 0 or index > self.length:
-            return
+            raise IndexError("Index out of range")
 
         if index == 0:
             self.prepend(value)
@@ -189,3 +189,17 @@ class LinkedList:
             curr = curr.next
 
         return result
+
+    def reverse(self):
+        prev = None
+        curr = self.head
+
+        while curr:
+            next_node = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_node
+
+        self.tail, self.head = self.head, self.tail
+
+        return self
