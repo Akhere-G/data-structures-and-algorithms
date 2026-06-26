@@ -105,6 +105,20 @@ def test_setitem(populated_list):
     assert populated_list.tail.value == 3
 
 
+def test_insert(populated_list, empty_list):
+    empty_list.insert(0, 0)
+
+    assert empty_list.head.value == 0
+    assert empty_list.length == 1
+
+    populated_list.insert(0, 5)
+    populated_list.insert(4, 40)
+
+    assert populated_list.head.value == 5
+    assert populated_list.tail.value == 40
+    assert populated_list.length == 5
+
+
 def test_getitem_out_of_bounds(populated_list):
     # pytest.raises checks that the correct error is thrown
     with pytest.raises(IndexError, match="Index out of range"):

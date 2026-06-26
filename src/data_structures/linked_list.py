@@ -142,6 +142,29 @@ class LinkedList:
         if curr:
             curr.value = value
 
+    def insert(self, index, value):
+        if index < 0 or index > self.length:
+            return
+
+        if index == 0:
+            self.prepend(value)
+            return
+
+        if index == self.length:
+            self.append(value)
+            return
+
+        prev = self.head
+        for _ in range(index - 1):
+            if prev:
+                prev = prev.next
+
+        if prev:
+            new_node = Node(value)
+            new_node.next = prev.next
+            prev.next = new_node
+            self.length += 1
+
     def contains(self, value):
         curr = self.head
         while curr:
