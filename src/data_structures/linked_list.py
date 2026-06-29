@@ -203,3 +203,44 @@ class LinkedList:
         self.tail, self.head = self.head, self.tail
 
         return self
+
+    def middle_node(self):
+        slow = fast = self.head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next if slow else None
+
+        return slow.value if slow else None
+
+    def has_loop(self):
+        if not self.head:
+            return False
+
+        slow = self.head
+        fast = slow.next if slow else None
+
+        while slow and fast and fast.next:
+            if slow == fast:
+                return True
+            slow = slow.next
+            fast = fast.next.next
+
+        return False
+
+    def knth_from_end(self, k):
+        if k < 0 or k >= self.length:
+            return None
+
+        slow = fast = self.head
+
+        for _ in range(k):
+            if fast:
+                fast = fast.next
+
+        while fast and fast.next:
+            if slow:
+                slow = slow.next
+            fast = fast.next
+
+        return slow.value if slow else None

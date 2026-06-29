@@ -194,3 +194,39 @@ def test_reverse(empty_list, populated_list):
     empty_list.append(1)
 
     assert empty_list.reverse().to_list() == [1]
+
+
+def test_middle_node(empty_list, populated_list):
+    assert empty_list.middle_node() is None
+    assert populated_list.middle_node() == 20
+
+    populated_list.append(30)
+    populated_list.append(40)
+    populated_list.append(50)
+
+    assert populated_list.middle_node() == 30
+
+
+def test_has_loop(empty_list, populated_list):
+    assert not empty_list.has_loop()
+    assert not populated_list.has_loop()
+
+    populated_list.tail.next = populated_list.head
+    assert populated_list.has_loop()
+
+
+def test_knth_from_end(empty_list, populated_list):
+    assert empty_list.knth_from_end(0) is None
+    assert populated_list.knth_from_end(-1) is None
+    assert populated_list.knth_from_end(4) is None
+
+    populated_list.append(40)
+    populated_list.append(50)
+    populated_list.append(60)
+    populated_list.append(70)
+
+    assert populated_list.knth_from_end(0) == 70
+    assert populated_list.knth_from_end(1) == 60
+    assert populated_list.knth_from_end(2) == 50
+    assert populated_list.knth_from_end(6) == 10
+    assert populated_list.knth_from_end(7) is None
